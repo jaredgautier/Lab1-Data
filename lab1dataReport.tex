@@ -1,0 +1,127 @@
+\documentclass[twocolumn]{IEEEtran}
+
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage[margin=0.7in,a4paper]{geometry}
+\graphicspath{{images/}}
+
+\title{ELEN4020A: Data Intensive Computing Lab 1}
+\author{Sasha Berkowitz - 818737 Nick Raal - 793528 Jared Gautier - 820687 Arunima Pathania - 1117426}
+
+\begin{document}
+\maketitle
+\section{Introduction}
+
+In the lab it was required to write code to perform different procedures on N-dimentional, or multi-dimensional, arrays.
+
+In order to make these procedures operational for any value N, the array is converted into a longer one-dimensional array representing the values of the multi-dimensional one, as described in Section 2. Each function then operates on a 1-D array, where each element’s index corresponds to its position in the N-dimensional array.
+
+The indexing runs from the first to last array dimensions, for example in a multi-dimensional array of [15][15][15], the value at position (1,0,0) will have position (1) in the final array, at position (0,1,0) will have position (16) and so on. Functions to convert between an array of co-ordinates and its corresponding final index value were implemented and used as described in Section 4.
+
+These procedures take as input a value k, being the number of dimensions, and an array of the dimension values. They are individually discussed in sections 2 through 4.
+
+\section{Procedure 1}
+In the first procedure a one-dimensional array is created. The length of this array is equal to the product of the dimensions of the multidimensional array’s size. Each element in the array is then initialised to zero using a for-loop as shown in Algorithm 1.
+
+
+\begin{algorithm}
+	\caption{Procedure 1}
+	\begin{algorithmic} 
+		\REQUIRE {Returns \textit{finalArr} with all values set to 0}
+		\STATE
+		\STATE Take $values$ as input to $initialiseArray()$
+		\STATE
+		\STATE $*finalArr \leftarrow malloc(values*sizeof(int))$
+	
+		
+		\FOR{$a \leftarrow 0$ to $values$}
+		\STATE $finalArr[a] \leftarrow 0$
+		\ENDFOR
+			
+	
+		\RETURN $finalArr$
+	\end{algorithmic}
+\end{algorithm}
+
+\section{Procedure 2}
+The second procedure uses a for loop, iterates over every 10th element in the array and sets the value to 1. This ensures that 10\% of the values are uniformely set to 1, as is shown in the pseudo code in Algorithm 2.
+
+\begin{algorithm}
+	\caption{Procedure 2}
+	\begin{algorithmic} 
+		\REQUIRE {Returns \textit{finalArr} with 10\% of values set to 1}
+		\STATE
+		\STATE Take $values$ and $finalArr[]$ as input to $populateOnes()$
+		\STATE
+	
+		\FOR{$a \leftarrow 0$ to $values$  }
+		\STATE $finalArr[a] \leftarrow 1$
+		\STATE $a \leftarrow a+10$
+		\ENDFOR		
+		\RETURN $finalArr$
+	\end{algorithmic}
+\end{algorithm}
+
+\section{Procedure 3}
+The third procedure uses a for loop and randomly prints the values of 5\% of the total elements in the array. This can be shown in the pseudo code in Algorithm 3.
+
+Additionally, it prints the co-ordinates of the array element. The procedure that converts the index of the final array to the K-dimensinal co-ordinates is shown in Algorithm 4.
+
+\begin{algorithm}
+	\caption{Procedure 3}
+	\begin{algorithmic} 
+		\REQUIRE {Uniformaly in a random fashion chooses 5\% of the elements and prints $coordArr$ and $index$ of the $finalArr$}
+		\STATE
+		\STATE Takes $values$, $finalArr[]$, $dimArr[]$ and $k$ as input to $printVals()$
+		\STATE
+		\STATE $index \leftarrow 0$
+		\FOR{$a \leftarrow 0$ to $values*0.05$  }
+		\STATE $ index \leftarrow rand()\%values$
+		\STATE $*coordArr \leftarrow indexToCoord(k, dimArr, index)$
+		\STATE printf $ \leftarrow index$
+		\STATE printf $ \leftarrow $ Coordinates
+		\FOR{$b \leftarrow 0$ to $k$  }
+		\STATE printf $ \leftarrow coordArr[b]$
+		
+		\ENDFOR
+		\STATE printf $ \leftarrow $ Value
+		\STATE printf $ \leftarrow finalArr[index]$
+		
+		\ENDFOR		
+
+
+	\end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}
+	\caption{indexToCoord}
+	\begin{algorithmic} 
+		\REQUIRE {Returns $fetchedCoordArr$, the index value to an array of coordinates}
+		\STATE
+		\STATE Takes $k$ , $dimArr$ and $index$
+		\STATE
+		\STATE $*fetchedCoordArr \leftarrow malloc(k*sizeOf(int))$
+		\FOR{$a \leftarrow 0$ to $k$  }
+		\STATE $ fancy \leftarrow 1$
+		\FOR{$b \leftarrow 0$ to $k-a-1$  }
+		\STATE $fancy \leftarrow fancy*dimArr[b]$
+		
+		\ENDFOR
+		\STATE $fetchedCoordArr[a] \leftarrow index/fancy$ 
+		\STATE $index \leftarrow index\%fancy$
+		
+		\ENDFOR		
+		\STATE return $fetchedCoordArr$
+		
+	\end{algorithmic}
+\end{algorithm}
+
+
+
+\end{document}	
